@@ -1,0 +1,42 @@
+<!-- Backdrop -->
+<div class="fixed inset-0 bg-black/60 z-40" (click)="onClose()"></div>
+
+<!-- Modal Panel -->
+<div class="fixed inset-0 z-50 flex items-start justify-end">
+  <div
+    class="bg-[#181f2b] text-gray-200 w-full max-w-sm h-full shadow-2xl border-l border-gray-700 animate-slide-in-right flex flex-col">
+    <!-- Header -->
+    <header class="flex items-center justify-between p-4 border-b border-gray-700/50 flex-shrink-0">
+      <div class="flex items-center space-x-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-400" viewBox="0 0 20 20" fill="currentColor">
+          <path
+            d="M8.433 7.418c.158-.103.346-.196.567-.267v1.698a2.5 2.5 0 004 0V7.151c.22.071.409.164.567.267C13.882 7.64 14 7.969 14 8.5v3a2.5 2.5 0 004 0v-1a.5.5 0 00-.433-.491l-1.567-.392a.5.5 0 00-.567.491v1.5a.5.5 0 01-1 0v-3a.5.5 0 00-.433-.491l-1.567-.392a.5.5 0 00-.567.491v1.5a.5.5 0 01-1 0v-3a.5.5 0 00-.433-.491l-1.567-.392a.5.5 0 00-.567.491v1.5a.5.5 0 01-1 0v-3a.5.5 0 00-.433-.491l-1.567-.392a.5.5 0 00-.567.491v1.5a.5.5 0 01-1 0V8.5c0-.531.118-.86.433-1.082z" />
+        </svg>
+        <h2 class="text-xl font-bold text-white">Earnings History</h2>
+      </div>
+      <button (click)="onClose()"
+        class="text-gray-400 hover:text-white transition-colors p-1 rounded-full hover:bg-gray-700">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </header>
+
+    <!-- Content -->
+    <div class="p-6 space-y-4 overflow-y-auto flex-1">
+      @let earning = fboData();
+      <div class="p-4 rounded-lg bg-gray-800 border border-gray-700">
+        <div>
+          <p class="text-2xl font-bold text-white">{{ earning.thisMonthCC }} cc</p>
+          <p class="text-xs text-purple-400">Current Month</p>
+        </div>
+      </div>
+      <div class="p-4 rounded-lg bg-gray-800 border border-gray-700">
+        <div>
+          <p class="text-2xl font-bold text-white">{{earning.lastMonthCC}} cc</p>
+          <p class="text-xs text-purple-400">Last Month</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

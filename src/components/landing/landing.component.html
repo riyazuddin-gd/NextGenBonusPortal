@@ -1,0 +1,61 @@
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-900 p-4">
+  <div class="w-full max-w-md mx-auto bg-gray-800 rounded-2xl shadow-2xl border border-gray-700 p-8 text-center animate-fade-in">
+    <div class="mb-6">
+      <svg class="mx-auto h-12 w-auto text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
+      </svg>
+    </div>
+    <h1 class="text-3xl font-bold text-gray-100 mb-2">
+      Welcome to Next-Gen
+    </h1>
+    <h2 class="text-2xl font-semibold text-indigo-400 mb-4">
+      Bonus & Goal Tracker
+    </h2>
+    <p class="text-gray-400 mb-8">
+      Enter your FBO ID to access your personalized dashboard and track your progress towards success.
+    </p>
+ 
+    <div class="flex flex-col space-y-4">
+      <input
+        type="text"
+        placeholder="Enter your FBO ID"
+        [value]="fboId()"
+        (input)="updateFboId($event)"
+        (keypress)="blockNonNumeric($event)"
+        (keyup.enter)="handleContinue()"
+        inputmode="numeric"
+        maxlength="12"
+        class="w-full px-4 py-3 text-lg bg-gray-700 border-2 border-gray-600 text-white rounded-lg
+               focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200
+               placeholder-gray-500"
+      />
+    
+      <!-- Validation message -->
+      <div *ngIf="fboId().length > 0 && fboId().length !=12" class="text-red-400 text-sm mt-1">
+        FBO ID must be exactly 12 digits.
+      </div>
+    
+      <button
+        (click)="handleContinue()"
+        [disabled]="isLoading() || fboId().length !== 12"
+        class="w-full flex items-center justify-center px-4 py-3 text-lg font-semibold text-white
+               bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2
+               focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500
+               transition-all duration-300 ease-in-out disabled:bg-indigo-500 disabled:opacity-50
+               disabled:cursor-not-allowed transform hover:scale-105"
+      >
+        @if (isLoading()) {
+          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Processing...
+        } @else {
+          Continue
+        }
+      </button>
+    </div>
+    
+  </div>
+</div>

@@ -1,0 +1,100 @@
+<section >
+  <!-- Header -->
+  <div class="bg-gradient-to-r from-indigo-600 to-purple-600  rounded-lg p-6 mb-6 flex items-center space-x-4">
+    <div class="flex-shrink-0 bg-white/10 p-3 rounded-lg">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+      </svg>
+    </div>
+    <div>
+      <h2 class="text-2xl font-bold text-white"> Bonus Calculator</h2>
+      <p class="text-indigo-200">Get AI-powered insights into your future earnings potential based on current performance and growth projections.</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="grid grid-cols-1  lg:grid-cols-5 gap-6">
+    <!-- Input Parameters -->
+    <div class="lg:col-span-2 bg-gray-800 rounded-lg border border-gray-700 p-6">
+      <h3 class="text-lg font-semibold text-white mb-6 flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+        Input Parameters
+      </h3>
+      <div class="space-y-6">
+
+        <!-- Case Credits -->
+        <div>
+          <label for="recruitment" class="flex justify-between items-center text-sm font-medium text-gray-300 mb-2">
+            <span>Case Credits</span>
+            <span class="px-2 py-0.5 bg-gray-700 text-gray-200 rounded-md text-xs">{{ caseCredits() }}</span>
+          </label>
+          <input id="recruitment" type="range" min="0" max="200" [value]="caseCredits()" (input)="updateCaseCredits($event)" class="w-full">
+        </div>
+        <button (click)="handlePrediction()" [disabled]="isLoading()" class="w-full mt-4 flex items-center justify-center px-4 py-3 text-lg font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500 transition-all duration-300 ease-in-out disabled:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed">
+          @if (isLoading()) {
+            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Calculating...
+          } @else {
+            Predict Earnings
+          }
+        </button>
+      </div>
+    </div>
+
+    <!-- Prediction Results -->
+    <div class="lg:col-span-3 bg-gray-800 rounded-lg border border-gray-700 p-6">
+      <div class="flex justify-between items-start mb-4">
+        <h3 class="text-lg font-semibold text-white flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Prediction Results
+        </h3>
+      </div>
+
+      <div class="bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg p-6 text-center text-white mb-6">
+        <p class="text-lg text-green-200">Expected Level</p>
+        <p class="text-3xl font-bold my-2">{{ prediction().level }}</p>
+        <p class="text-lg text-green-200">Expected Bonus </p>
+        <p class="text-5xl font-bold my-2">{{ prediction().bonus }}%</p>
+
+        <!-- <p class="text-sm text-green-200">Over {{ projectionTimeline() }} months</p> -->
+      </div>
+
+      <!-- <h4 class="text-md font-semibold text-white mb-4">Bonus Breakdown</h4> -->
+      <!-- <div class="space-y-2">
+        @if(error(); as errorMessage) {
+          <div class="p-4 text-center text-red-300 bg-red-900/50 rounded-lg">
+            <p class="font-semibold">Calculation Failed</p>
+            <p class="text-sm">{{ errorMessage }}</p>
+          </div>
+        }
+        @if(!error()) {
+          @let breakdown = prediction().breakdown;
+          <div class="flex justify-between items-center p-3 bg-gray-900/50 rounded-md">
+            <span class="text-gray-300">Personal Sales Bonus</span>
+            <span class="font-mono text-gray-100">${{ breakdown.personalSalesBonus | number:'1.2-2' }}</span>
+          </div>
+          <div class="flex justify-between items-center p-3 bg-gray-900/50 rounded-md">
+            <span class="text-gray-300">Team Performance Bonus</span>
+            <span class="font-mono text-gray-100">${{ breakdown.teamPerformanceBonus | number:'1.2-2' }}</span>
+          </div>
+          <div class="flex justify-between items-center p-3 bg-gray-900/50 rounded-md">
+            <span class="text-gray-300">Leadership Bonus</span>
+            <span class="font-mono text-gray-100">${{ breakdown.leadershipBonus | number:'1.2-2' }}</span>
+          </div>
+          <div class="flex justify-between items-center p-3 bg-gray-900/50 rounded-md">
+            <span class="text-gray-300">Rank Achievement Bonus</span>
+            <span class="font-mono text-gray-100">${{ breakdown.rankAchievementBonus | number:'1.2-2' }}</span>
+          </div>
+        }
+      </div> -->
+    </div>
+  </div>
+</section>
+ 
